@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Needed to talk to Supabase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- ⚠️ REQUIRED FOR ANDROID 11+ TO DETECT UPI APPS -->
+    <queries>
+        <package android:name="com.phonepe.app" />              <!-- PhonePe -->
+        <package android:name="com.google.android.apps.nbu.paisa.user" /> <!-- GPay -->
+        <package android:name="net.one97.paytm" />              <!-- Paytm -->
+        <package android:name="in.org.npci.upiapp" />           <!-- BHIM -->
+        <package android:name="com.freecharge.android" />       <!-- Freecharge -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="upi" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Admin Payment Panel"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:replace="android:theme">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".ui.AdminPaymentActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>

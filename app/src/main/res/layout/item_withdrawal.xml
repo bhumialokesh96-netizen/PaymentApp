@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Section: UPI ID -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="REQUEST FROM"
+            android:textSize="10sp"
+            android:textColor="#9E9E9E"
+            android:letterSpacing="0.1"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_upi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="user@okhdfcbank"
+            android:textSize="18sp"
+            android:textColor="#212121"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EEEEEE"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Bottom Section: Amount & Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Amount Info -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAYABLE AMOUNT"
+                    android:textSize="10sp"
+                    android:textColor="#9E9E9E"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tv_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹500.00"
+                    android:textSize="22sp"
+                    android:textColor="#4CAF50"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- Pay Button -->
+            <Button
+                android:id="@+id/btn_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAY VIA UPI"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#2196F3"
+                android:paddingHorizontal="20dp"
+                app:icon="@drawable/ic_launcher_foreground" 
+                app:iconGravity="textStart"
+                app:cornerRadius="8dp"/>
+                <!-- Note: Remove app:icon if you don't have an icon -->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
