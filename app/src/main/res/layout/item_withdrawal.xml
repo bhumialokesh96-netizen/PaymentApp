@@ -87,7 +87,7 @@
                 android:textStyle="bold"
                 android:backgroundTint="#2196F3"
                 android:paddingHorizontal="20dp"
-                app:icon="@drawable/ic_launcher_foreground" 
+                 
                 app:iconGravity="textStart"
                 app:cornerRadius="8dp"/>
                 <!-- Note: Remove app:icon if you don't have an icon -->
