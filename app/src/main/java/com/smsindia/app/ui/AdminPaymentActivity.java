@@ -1,18 +1,19 @@
-package com.smsindia.ui;
+package com.smsindia.app.ui; // ✅ FIXED PACKAGE
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.yourpackage.R;
-import com.yourpackage.adapter.WithdrawalAdapter;
-import com.yourpackage.model.WithdrawalModel;
-import com.yourpackage.network.SupabaseAdminApi;
-import java.util.ArrayList;
+
+// ✅ FIXED IMPORTS (No more "com.yourpackage")
+import com.smsindia.app.R;
+import com.smsindia.app.adapter.WithdrawalAdapter;
+import com.smsindia.app.model.WithdrawalModel;
+import com.smsindia.app.network.SupabaseAdminApi;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,28 +25,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AdminPaymentActivity extends AppCompatActivity {
 
-    // CONFIG
-    private static final String SUPABASE_URL = "https://appfwrpynfxfpcvpavso.supabase.co";
-    private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwcGZ3cnB5bmZ4ZnBjdnBhdnNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwOTQ2MTQsImV4cCI6MjA3NzY3MDYxNH0.Z-BMBjME8MVK5MS2KBgcCDgR7kXvDEjtcHrVfIUvwZY"; // Use Service Role Key for Admin App
-    
+    // 🔴 TODO: PUT YOUR REAL URL AND KEY HERE
+    private static final String SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
+    private static final String SUPABASE_KEY = "YOUR_SERVICE_ROLE_KEY"; 
+
     final int UPI_PAYMENT_REQ_CODE = 123;
     RecyclerView recyclerView;
     SupabaseAdminApi api;
-    String currentPayingId = ""; // To track which ID we are paying
+    String currentPayingId = ""; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_payment); // Ensure you have a layout with a RecyclerView
+        setContentView(R.layout.activity_admin_payment); 
 
-        // Setup API
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(SUPABASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         api = retrofit.create(SupabaseAdminApi.class);
 
-        // Setup UI
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -58,7 +57,6 @@ public class AdminPaymentActivity extends AppCompatActivity {
             public void onResponse(Call<List<WithdrawalModel>> call, Response<List<WithdrawalModel>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     WithdrawalAdapter adapter = new WithdrawalAdapter(response.body(), request -> {
-                        // On Pay Clicked
                         launchUpi(request.upi_id, request.amount, request.id);
                     });
                     recyclerView.setAdapter(adapter);
@@ -68,22 +66,16 @@ public class AdminPaymentActivity extends AppCompatActivity {
         });
     }
 
-    // ==========================================
-    // 1. LAUNCH UPI
-    // ==========================================
     private void launchUpi(String upiId, String amount, String dbId) {
         this.currentPayingId = dbId;
-
         Uri uri = Uri.parse("upi://pay").buildUpon()
                 .appendQueryParameter("pa", upiId)
                 .appendQueryParameter("pn", "SMS Admin")
                 .appendQueryParameter("am", amount)
                 .appendQueryParameter("cu", "INR")
                 .build();
-
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(uri);
-
         Intent chooser = Intent.createChooser(intent, "Pay via");
         if (chooser.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(chooser, UPI_PAYMENT_REQ_CODE);
@@ -92,13 +84,9 @@ public class AdminPaymentActivity extends AppCompatActivity {
         }
     }
 
-    // ==========================================
-    // 2. DETECT RESULT
-    // ==========================================
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == UPI_PAYMENT_REQ_CODE) {
             if ((RESULT_OK == resultCode) || (resultCode == 11)) {
                 if (data != null) {
@@ -116,11 +104,7 @@ public class AdminPaymentActivity extends AppCompatActivity {
     private void checkPaymentStatus(String response) {
         String status = "";
         String txnRef = "";
-
         if (response == null) response = "discard";
-
-        // Parse the UPI Response String
-        // Example: "txnId=...&Status=SUCCESS&txnRef=123456"
         String[] parts = response.split("&");
         for (String part : parts) {
             String[] pair = part.split("=");
@@ -132,7 +116,6 @@ public class AdminPaymentActivity extends AppCompatActivity {
                 }
             }
         }
-
         if (status.equals("success")) {
             Toast.makeText(this, "Payment Successful!", Toast.LENGTH_LONG).show();
             markRequestAsPaid(currentPayingId, txnRef);
@@ -141,19 +124,15 @@ public class AdminPaymentActivity extends AppCompatActivity {
         }
     }
 
-    // ==========================================
-    // 3. UPDATE DATABASE
-    // ==========================================
     private void markRequestAsPaid(String id, String refNo) {
         Map<String, Object> updateMap = new HashMap<>();
         updateMap.put("status", "PAID");
         updateMap.put("txn_ref", refNo);
-
         api.markAsPaid(SUPABASE_KEY, "Bearer " + SUPABASE_KEY, "eq." + id, updateMap).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Toast.makeText(AdminPaymentActivity.this, "Database Updated!", Toast.LENGTH_SHORT).show();
-                fetchWithdrawals(); // Refresh List
+                fetchWithdrawals(); 
             }
             @Override public void onFailure(Call<Void> call, Throwable t) { }
         });

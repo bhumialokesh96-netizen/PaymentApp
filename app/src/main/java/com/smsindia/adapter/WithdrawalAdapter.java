@@ -1,4 +1,4 @@
-package com.smsindia.adapter;
+package com.smsindia.app.adapter; // ✅ FIXED PACKAGE
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,8 +7,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.yourpackage.R;
-import com.yourpackage.model.WithdrawalModel;
+
+// ✅ FIXED IMPORTS
+import com.smsindia.app.R;
+import com.smsindia.app.model.WithdrawalModel;
+
 import java.util.List;
 
 public class WithdrawalAdapter extends RecyclerView.Adapter<WithdrawalAdapter.ViewHolder> {
@@ -36,7 +39,6 @@ public class WithdrawalAdapter extends RecyclerView.Adapter<WithdrawalAdapter.Vi
         WithdrawalModel item = list.get(position);
         holder.tvUpi.setText(item.upi_id);
         holder.tvAmount.setText("₹" + item.amount);
-        
         holder.btnPay.setOnClickListener(v -> listener.onPay(item));
     }
 
