@@ -26,8 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AdminPaymentActivity extends AppCompatActivity {
 
     // 🔴 TODO: PUT YOUR REAL URL AND KEY HERE
-    private static final String SUPABASE_URL = "https://YOUR_PROJECT.supabase.co";
-    private static final String SUPABASE_KEY = "YOUR_SERVICE_ROLE_KEY"; 
+    private static final String SUPABASE_URL = "https://appfwrpynfxfpcvpavso.supabase.co";
+    private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwcGZ3cnB5bmZ4ZnBjdnBhdnNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjIwOTQ2MTQsImV4cCI6MjA3NzY3MDYxNH0.Z-BMBjME8MVK5MS2KBgcCDgR7kXvDEjtcHrVfIUvwZY"; 
 
     final int UPI_PAYMENT_REQ_CODE = 123;
     RecyclerView recyclerView;
