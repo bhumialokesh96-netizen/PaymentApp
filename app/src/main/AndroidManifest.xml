@@ -18,14 +18,19 @@
         </intent>
     </queries>
 
-    <application
+        <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:label="Admin Payment Panel"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        
+        android:icon="@android:drawable/sym_def_app_icon" 
         tools:replace="android:theme">
+        
+        <!-- 
+           1. I changed android:icon to use the system default icon.
+           2. I REMOVED android:roundIcon completely because you don't have that file.
+        -->
 
         <!-- Main Activity -->
         <activity
@@ -38,5 +43,6 @@
         </activity>
 
     </application>
+
 
 </manifest>
